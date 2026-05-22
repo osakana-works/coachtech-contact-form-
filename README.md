@@ -70,7 +70,6 @@ erDiagram
 
     %% リレーション
     CATEGORIES ||--o{ CONTACTS : "has many"
-    CONTACTS }o--o{ TAGS : "belongs to many"
     CONTACTS ||--o{ CONTACT_TAG : ""
     TAGS ||--o{ CONTACT_TAG : ""
 ```
