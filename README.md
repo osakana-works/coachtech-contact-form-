@@ -21,58 +21,57 @@
 erDiagram
 
     USERS {
-        bigint id PK
-        string name
-        string email UNIQUE
-        timestamp email_verified_at
-        string password
-        string remember_token
+        bigint_unsigned id PK
+        varchar_255 name
+        varchar_255 email UK
+        timestamp email_verified_at "nullable"
+        varchar_255 password
+        varchar_100 remember_token "nullable"
         timestamp created_at
         timestamp updated_at
     }
 
     CATEGORIES {
-        bigint id PK
-        string content
+        bigint_unsigned id PK
+        varchar_255 content
         timestamp created_at
         timestamp updated_at
     }
 
     CONTACTS {
-        bigint id PK
-        bigint category_id FK
-        string first_name
-        string last_name
-        tinyint gender
-        string email
-        string tel
-        string address
-        string building
-        string detail
+        bigint_unsigned id PK
+        bigint_unsigned category_id FK
+        varchar_255 first_name
+        varchar_255 last_name
+        tinyint gender "1:男性 2:女性 3:その他"
+        varchar_255 email
+        varchar_11 tel "ハイフンなし"
+        varchar_255 address
+        varchar_255 building "nullable"
+        varchar_120 detail
         timestamp created_at
         timestamp updated_at
     }
 
     TAGS {
-        bigint id PK
-        string name UNIQUE
+        bigint_unsigned id PK
+        varchar_50 name UK
         timestamp created_at
         timestamp updated_at
     }
 
     CONTACT_TAG {
-        bigint id PK
-        bigint contact_id FK
-        bigint tag_id FK
+        bigint_unsigned id PK
+        bigint_unsigned contact_id FK
+        bigint_unsigned tag_id FK
         timestamp created_at
         timestamp updated_at
     }
 
     %% リレーション
-    CATEGORIES ||--o{ CONTACTS : "has many"
-    CONTACTS }o--o{ TAGS : "belongs to many"
-    CONTACTS ||--o{ CONTACT_TAG : ""
-    TAGS ||--o{ CONTACT_TAG : ""
+    CATEGORIES ||--o{ CONTACTS : "has many (CASCADE)"
+    CONTACTS ||--o{ CONTACT_TAG : "has many (CASCADE)"
+    TAGS ||--o{ CONTACT_TAG : "has many (CASCADE)"
 ```
 
 
