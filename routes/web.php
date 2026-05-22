@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+Route::get('/', [ContactController::class, 'index']);
+Route::post('/contacts', [ContactController::class, 'store']);
+Route::post('/contacts/confirm', [ContactController::class, 'confirm']);
+Route::get('/thanks', [ContactController::class, 'thanks']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/admin', fn () => view('admin.index'))->name('admin.index');
