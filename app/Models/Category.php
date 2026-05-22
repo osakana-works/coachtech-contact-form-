@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\Contact;
 
 class Category extends Model
 {
@@ -15,7 +14,7 @@ class Category extends Model
         'content',
     ];
 
-        public function contacts(): HasMany
+    public function contacts(): HasMany
     {
         return $this->hasMany(Contact::class);
     }
