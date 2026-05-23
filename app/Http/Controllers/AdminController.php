@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\IndexContactRequest;
 use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Tag;
-use App\Http\Requests\IndexContactRequest;
 
 class AdminController extends Controller
 {
-    public function index(IndexContactRequest $request){
-        //dd($request->all());
+    public function index(IndexContactRequest $request)
+    {
+        // dd($request->all());
         $categories = Category::all();
         $contacts = Contact::with(['category', 'tags'])
             ->filter($request)
@@ -20,15 +20,18 @@ class AdminController extends Controller
 
         $tags = Tag::all();
 
-        return view('admin.index', compact('categories', 'contacts','tags'));
+        return view('admin.index', compact('categories', 'contacts', 'tags'));
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $contact = Contact::with('tags', 'category')->findOrFail($id);
+
         return view('admin.show', compact('contact'));
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $contact = Contact::findOrFail($id);
         $contact->delete();
 

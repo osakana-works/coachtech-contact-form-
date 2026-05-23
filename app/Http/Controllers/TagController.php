@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Tag;
-use App\Http\Requests\StoreContactRequest;
 use App\Http\Requests\StoreTagRequest;
 use App\Http\Requests\UpdateTagRequest;
-
+use App\Models\Tag;
 
 class TagController extends Controller
 {
@@ -23,10 +20,10 @@ class TagController extends Controller
     }
 
     public function edit($id)
-    {    
+    {
         $tag = Tag::findOrFail($id);
 
-        return view('admin.tags.edit',compact('tag'));
+        return view('admin.tags.edit', compact('tag'));
     }
 
     public function update(UpdateTagRequest $request, $id)

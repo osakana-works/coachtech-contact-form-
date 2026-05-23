@@ -49,10 +49,10 @@ class Contact extends Model
             $keyword = preg_replace('/[\s　]+/', '', $request->keyword); // 半角・全角スペースを除去
             $query->where(function ($q) use ($keyword) {
                 $q->where('first_name', 'like', "%{$keyword}%")
-                ->orWhere('last_name', 'like', "%{$keyword}%")
-                ->orWhere('email', 'like', "%{$keyword}%")
-                ->orWhereRaw("CONCAT(last_name, first_name) LIKE ?", ["%{$keyword}%"])
-                ->orWhereRaw("CONCAT(first_name, last_name) LIKE ?", ["%{$keyword}%"]);
+                    ->orWhere('last_name', 'like', "%{$keyword}%")
+                    ->orWhere('email', 'like', "%{$keyword}%")
+                    ->orWhereRaw('CONCAT(last_name, first_name) LIKE ?', ["%{$keyword}%"])
+                    ->orWhereRaw('CONCAT(first_name, last_name) LIKE ?', ["%{$keyword}%"]);
             });
         }
 
