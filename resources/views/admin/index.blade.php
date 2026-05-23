@@ -6,7 +6,7 @@
                 class="px-5 py-1.5 border border-[#ddd8d3] text-[#c4bab0] bg-white rounded hover:bg-gray-50 transition lowercase text-sm">logout</button>
         </form>
     </x-slot>
-    {{--
+    
     <div class="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto">
             <!-- Adminタイトル -->
@@ -62,12 +62,12 @@
                             エクスポート
                         </a>
                     </div>
-                    <!-- ページネーション -->
-                    <div class="flex items-center">
-                        {{ $contacts->appends(request()->query())->links() }}
-                    </div>
                 </form>
             </div>
+                <!-- ページネーション -->
+                <div class="flex items-center">
+                    {{ $contacts->appends(request()->query())->links() }}
+                </div>
 
             <!-- テーブル -->
             <div class="bg-white rounded overflow-hidden border border-gray-200">
@@ -183,5 +183,5 @@
             @endisset
 
         </div>
-    </div>--}}
+    </div>
 </x-app-layout>
