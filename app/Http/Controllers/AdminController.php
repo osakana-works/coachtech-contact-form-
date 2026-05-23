@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Contact;
+use App\Models\Tag;
+use App\Http\Requests\IndexContactRequest;
+
+class AdminController extends Controller
+{
+    public function index(IndexContactRequest $request){
+        //dd($request->all());
+        $categories = Category::all();
+        $contacts = Contact::with(['category', 'tags'])
+            ->filter($request)
+            ->orderBy('created_at', 'desc')
+            ->paginate(7);
+
+        $tags = Tag::all();
+
+        return view('admin.index', compact('categories', 'contacts','tags'));
+    }
+
+    public function show($id){
+        $contact = Contact::with('tags', 'category')->findOrFail($id);
+        return view('admin.show', compact('contact'));
+    }
+
+    public function destroy($id){
+        $contact = Contact::findOrFail($id);
+        $contact->delete();
+
+        return redirect('/admin')->with('success', '削除しました');
+    }
+}
