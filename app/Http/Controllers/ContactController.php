@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ExportContactRequest;
 use App\Http\Requests\StoreContactRequest;
 use App\Models\Category;
 use App\Models\Contact;
@@ -53,5 +54,53 @@ class ContactController extends Controller
     public function thanks()
     {
         return view('contact.thanks');
+    }
+
+    public function export(ExportContactRequest $request)
+    {
+        // dd($request);
+        $contacts = Contact::with('category')
+            ->filter($request)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $headers = [
+            'ID', '氏名', '性別', 'メール', '電話', '住所', '建物', 'カテゴリ', '内容', '作成日時',
+        ];
+
+        $rows = $contacts->map(function ($contact) {
+            return [
+                $contact->id,
+                $contact->last_name.' '.$contact->first_name,
+                $contact->gender === 1 ? '男性' : ($contact->gender === 2 ? '女性' : 'その他'),
+                $contact->email,
+                $contact->tel,
+                $contact->address,
+                $contact->building,
+                $contact->category->content,
+                $contact->detail,
+                $contact->created_at->format('Y-m-d H:i:s'),
+            ];
+        });
+
+        $handle = fopen('php://temp', 'r+');
+
+        fwrite($handle, "\xEF\xBB\xBF");
+
+        fputcsv($handle, $headers);
+
+        foreach ($rows as $row) {
+            fputcsv($handle, $row);
+        }
+
+        rewind($handle);
+        $csv = stream_get_contents($handle);
+        fclose($handle);
+
+        $filename = 'contacts_'.now()->format('Ymd_His').'.csv';
+
+        return response($csv)
+            ->header('Content-Type', 'text/csv')
+            ->header('Content-Disposition', "attachment; filename={$filename}");
     }
 }

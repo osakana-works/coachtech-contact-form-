@@ -30,4 +30,6 @@ Route::middleware('auth')->group(function () {
     Route::GET('admin/tags/{tag}/edit', [TagController::class, 'edit']);
     Route::PUT('admin/tags/{tag}', [TagController::class, 'update']);
     Route::DELETE('admin/tags/{tag}', [TagController::class, 'destroy']);
+
+    Route::get('/contacts/export', [ContactController::class, 'export']);
 });
