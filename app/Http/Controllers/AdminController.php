@@ -11,7 +11,6 @@ class AdminController extends Controller
 {
     public function index(IndexContactRequest $request)
     {
-        // dd($request->all());
         $categories = Category::all();
         $contacts = Contact::with(['category', 'tags'])
             ->filter($request)
