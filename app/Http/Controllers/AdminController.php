@@ -34,6 +34,6 @@ class AdminController extends Controller
         $contact = Contact::findOrFail($id);
         $contact->delete();
 
-        return redirect('/admin')->with('success', '削除しました');
+        return redirect('/admin');
     }
 }
