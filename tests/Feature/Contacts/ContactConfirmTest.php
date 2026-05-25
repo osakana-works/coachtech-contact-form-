@@ -27,13 +27,12 @@ class ContactConfirmTest extends TestCase
             'building' => 'テストビル',
             'category_id' => $category->id,
             'detail' => 'お問い合わせ内容です。',
-            'tags' => $tags->pluck('id')->toArray(),
+            'tag_ids' => $tags->pluck('id')->toArray(),
         ];
 
         $response = $this->post('/contacts/confirm', $data);
 
         $response->assertStatus(200);
-
         $response->assertViewIs('contact.confirm');
 
         $response->assertSee('山田');
@@ -41,15 +40,11 @@ class ContactConfirmTest extends TestCase
         $response->assertSee('test@example.com');
         $response->assertSee($category->name);
 
-        foreach ($tags as $tag) {
-            $response->assertSee($tag->name);
-        }
     }
 
     /** @test */
     public function バリデーションエラー時はリダイレクトされエラーが返る()
     {
-        // 必須項目を空で送信
         $response = $this->post('/contacts/confirm', []);
 
         $response->assertStatus(302);

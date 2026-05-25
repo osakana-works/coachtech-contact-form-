@@ -29,7 +29,7 @@ class ScreenAccessTest extends TestCase
     }
 
     /** @test */
-    public function thanks_page_is_displayed()
+    public function thanksページが表示されるか()
     {
         $response = $this->get('/thanks');
 

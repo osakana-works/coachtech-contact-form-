@@ -30,7 +30,7 @@ class ContactStoreTest extends TestCase
             'building' => 'テストビル',
             'category_id' => $category->id,
             'detail' => 'お問い合わせ内容です。',
-            'tags' => $tags->pluck('id')->toArray(),
+            'tag_ids' => $tags->pluck('id')->toArray(),
         ];
 
         $response = $this->post('/contacts', $data);
