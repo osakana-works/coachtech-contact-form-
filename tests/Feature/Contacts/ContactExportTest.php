@@ -13,6 +13,7 @@ class ContactExportTest extends TestCase
     use RefreshDatabase;
 
     private User $user;
+
     private Category $category;
 
     protected function setUp(): void
@@ -23,7 +24,7 @@ class ContactExportTest extends TestCase
     }
 
     /** @test */
-    public function ログイン済み管理者がCSVをダウンロードできる()
+    public function ログイン済み管理者が_cs_vをダウンロードできる()
     {
         Contact::factory()->count(3)->create([
             'category_id' => $this->category->id,
@@ -46,7 +47,7 @@ class ContactExportTest extends TestCase
     }
 
     /** @test */
-    public function フィルタ条件付きでCSVをダウンロードできる()
+    public function フィルタ条件付きで_cs_vをダウンロードできる()
     {
         Contact::factory()->count(2)->create([
             'category_id' => $this->category->id,

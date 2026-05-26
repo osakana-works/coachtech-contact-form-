@@ -22,14 +22,14 @@ class ContactStoreApiTest extends TestCase
     private function validData(array $override = []): array
     {
         return array_merge([
-            'first_name'  => '山田',
-            'last_name'   => '太郎',
-            'gender'      => 1,
-            'email'       => 'test@example.com',
-            'tel'         => '09012345678',
-            'address'     => '東京都江東区',
+            'first_name' => '山田',
+            'last_name' => '太郎',
+            'gender' => 1,
+            'email' => 'test@example.com',
+            'tel' => '09012345678',
+            'address' => '東京都江東区',
             'category_id' => $this->category->id,
-            'detail'      => 'お問い合わせ内容です。',
+            'detail' => 'お問い合わせ内容です。',
         ], $override);
     }
 

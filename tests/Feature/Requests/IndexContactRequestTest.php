@@ -80,7 +80,7 @@ class IndexContactRequestTest extends TestCase
     }
 
     /** @test */
-    public function genderが不正な場合APIは422を返す()
+    public function genderが不正な場合_ap_iは422を返す()
     {
         $response = $this->getJson('/api/v1/contacts?gender=4');
 
@@ -89,12 +89,11 @@ class IndexContactRequestTest extends TestCase
     }
 
     /** @test */
-    public function 存在しないcategory_idの場合APIは422を返す()
+    public function 存在しないcategory_idの場合_ap_iは422を返す()
     {
         $response = $this->getJson('/api/v1/contacts?category_id=999999');
 
         $response->assertStatus(422);
         $response->assertJsonFragment(['category_id' => ['選択されたカテゴリーが存在しません']]);
     }
-
 }

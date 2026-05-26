@@ -21,7 +21,7 @@ class ContactShowApiTest extends TestCase
     }
 
     /** @test */
-    public function JSON形式で詳細が返される()
+    public function jso_n形式で詳細が返される()
     {
         $contact = Contact::factory()->create([
             'category_id' => $this->category->id,
@@ -67,7 +67,7 @@ class ContactShowApiTest extends TestCase
     }
 
     /** @test */
-    public function 存在しないIDで404が返される()
+    public function 存在しない_i_dで404が返される()
     {
         $response = $this->getJson('/api/v1/contacts/999999');
 

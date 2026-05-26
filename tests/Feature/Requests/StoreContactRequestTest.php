@@ -183,8 +183,8 @@ class StoreContactRequestTest extends TestCase
         $this->assertTrue($validator->fails());
     }
 
-        /** @test */
-    public function 必須項目が空の場合APIは422を返す()
+    /** @test */
+    public function 必須項目が空の場合_ap_iは422を返す()
     {
         $response = $this->postJson('/api/v1/contacts', []);
 
@@ -205,7 +205,7 @@ class StoreContactRequestTest extends TestCase
     }
 
     /** @test */
-    public function 電話番号が不正な場合APIは422を返す()
+    public function 電話番号が不正な場合_ap_iは422を返す()
     {
         $category = Category::factory()->create();
 
@@ -214,7 +214,7 @@ class StoreContactRequestTest extends TestCase
             'last_name' => '太郎',
             'gender' => 1,
             'email' => 'test@example.com',
-            'tel' => '123',// ← ここだけ不正
+            'tel' => '123', // ← ここだけ不正
             'address' => '東京都江東区',
             'category_id' => $category->id,
             'detail' => 'お問い合わせ内容です。',
@@ -225,14 +225,14 @@ class StoreContactRequestTest extends TestCase
     }
 
     /** @test */
-    public function 性別が不正な場合APIは422を返す()
+    public function 性別が不正な場合_ap_iは422を返す()
     {
         $category = Category::factory()->create();
 
         $response = $this->postJson('/api/v1/contacts', [
             'first_name' => '山田',
             'last_name' => '太郎',
-            'gender' => 5,// ← ここだけ不正
+            'gender' => 5, // ← ここだけ不正
             'email' => 'test@example.com',
             'tel' => '09012345678',
             'address' => '東京都江東区',
@@ -245,7 +245,7 @@ class StoreContactRequestTest extends TestCase
     }
 
     /** @test */
-    public function 存在しないカテゴリの場合APIは422を返す()
+    public function 存在しないカテゴリの場合_ap_iは422を返す()
     {
         $response = $this->postJson('/api/v1/contacts', [
             'first_name' => '山田',
@@ -254,7 +254,7 @@ class StoreContactRequestTest extends TestCase
             'email' => 'test@example.com',
             'tel' => '09012345678',
             'address' => '東京都江東区',
-            'category_id' => 999999,// ← ここだけ不正
+            'category_id' => 999999, // ← ここだけ不正
             'detail' => 'お問い合わせ内容です。',
         ]);
 
@@ -263,7 +263,7 @@ class StoreContactRequestTest extends TestCase
     }
 
     /** @test */
-    public function 存在しないタグの場合APIは422を返す()
+    public function 存在しないタグの場合_ap_iは422を返す()
     {
         $category = Category::factory()->create();
 
@@ -276,7 +276,7 @@ class StoreContactRequestTest extends TestCase
             'address' => '東京都江東区',
             'category_id' => $category->id,
             'detail' => 'お問い合わせ内容です。',
-            'tag_ids' => [999999],// ← ここだけ不正
+            'tag_ids' => [999999], // ← ここだけ不正
         ]);
 
         $response->assertStatus(422);

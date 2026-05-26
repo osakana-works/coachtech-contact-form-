@@ -13,6 +13,7 @@ class ContactUpdateApiTest extends TestCase
     use RefreshDatabase;
 
     private Category $category;
+
     private Contact $contact;
 
     protected function setUp(): void
@@ -28,14 +29,14 @@ class ContactUpdateApiTest extends TestCase
     public function 正しいデータで200が返される()
     {
         $response = $this->putJson("/api/v1/contacts/{$this->contact->id}", [
-            'first_name'  => '更新',
-            'last_name'   => 'テスト',
-            'gender'      => 2,
-            'email'       => 'update@example.com',
-            'tel'         => '08012345678',
-            'address'     => '大阪府大阪市1-1-1',
+            'first_name' => '更新',
+            'last_name' => 'テスト',
+            'gender' => 2,
+            'email' => 'update@example.com',
+            'tel' => '08012345678',
+            'address' => '大阪府大阪市1-1-1',
             'category_id' => $this->category->id,
-            'detail'      => '更新テストです',
+            'detail' => '更新テストです',
         ]);
 
         $response->assertStatus(200);
@@ -66,15 +67,15 @@ class ContactUpdateApiTest extends TestCase
         $tags = Tag::factory()->count(2)->create();
 
         $response = $this->putJson("/api/v1/contacts/{$this->contact->id}", [
-            'first_name'  => '更新',
-            'last_name'   => 'テスト',
-            'gender'      => 1,
-            'email'       => 'update@example.com',
-            'tel'         => '09012345678',
-            'address'     => '東京都江東区',
+            'first_name' => '更新',
+            'last_name' => 'テスト',
+            'gender' => 1,
+            'email' => 'update@example.com',
+            'tel' => '09012345678',
+            'address' => '東京都江東区',
             'category_id' => $this->category->id,
-            'detail'      => '更新テストです',
-            'tag_ids'     => $tags->pluck('id')->toArray(),
+            'detail' => '更新テストです',
+            'tag_ids' => $tags->pluck('id')->toArray(),
         ]);
 
         $response->assertStatus(200);
@@ -82,7 +83,7 @@ class ContactUpdateApiTest extends TestCase
     }
 
     /** @test */
-    public function 存在しないIDで404が返される()
+    public function 存在しない_i_dで404が返される()
     {
         $response = $this->putJson('/api/v1/contacts/999999', [
             'first_name' => '更新',

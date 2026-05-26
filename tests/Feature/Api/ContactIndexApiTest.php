@@ -4,7 +4,6 @@ namespace Tests\Feature\Api;
 
 use App\Models\Category;
 use App\Models\Contact;
-use App\Models\Tag;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -21,7 +20,7 @@ class ContactIndexApiTest extends TestCase
     }
 
     /** @test */
-    public function JSON形式で一覧が返される()
+    public function jso_n形式で一覧が返される()
     {
         Contact::factory()->count(3)->create([
             'category_id' => $this->category->id,
@@ -132,6 +131,7 @@ class ContactIndexApiTest extends TestCase
         $response->assertStatus(200);
         $this->assertCount(1, $response->json('data'));
     }
+
     /** @test */
     public function genderで検索できる()
     {
@@ -168,11 +168,11 @@ class ContactIndexApiTest extends TestCase
         $response->assertStatus(422);
         $response->assertJsonFragment(['category_id' => ['選択されたカテゴリーが存在しません']]);
     }
-    
+
     /** @test */
     public function keywordが256文字以上の場合は422が返される()
     {
-        $response = $this->getJson('/api/v1/contacts?keyword=' . str_repeat('あ', 256));
+        $response = $this->getJson('/api/v1/contacts?keyword='.str_repeat('あ', 256));
 
         $response->assertStatus(422);
     }

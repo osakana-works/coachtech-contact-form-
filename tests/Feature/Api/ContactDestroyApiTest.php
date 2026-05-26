@@ -12,6 +12,7 @@ class ContactDestroyApiTest extends TestCase
     use RefreshDatabase;
 
     private Category $category;
+
     private Contact $contact;
 
     protected function setUp(): void
@@ -24,7 +25,7 @@ class ContactDestroyApiTest extends TestCase
     }
 
     /** @test */
-    public function 正しいIDで204が返される()
+    public function 正しい_i_dで204が返される()
     {
         $response = $this->deleteJson("/api/v1/contacts/{$this->contact->id}");
 
@@ -33,7 +34,7 @@ class ContactDestroyApiTest extends TestCase
     }
 
     /** @test */
-    public function 存在しないIDで404が返される()
+    public function 存在しない_i_dで404が返される()
     {
         $response = $this->deleteJson('/api/v1/contacts/999999');
 
