@@ -72,6 +72,8 @@ erDiagram
     CATEGORIES ||--o{ CONTACTS : "has many (CASCADE)"
     CONTACTS ||--o{ CONTACT_TAG : "has many (CASCADE)"
     TAGS ||--o{ CONTACT_TAG : "has many (CASCADE)"
+
+    %% CONTACT_TAG: (contact_id, tag_id) に複合ユニーク制約あり
 ```
 
 
