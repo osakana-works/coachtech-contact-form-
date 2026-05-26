@@ -94,7 +94,7 @@ http://localhost
 
     ```bash
     git clone https://github.com/osakana-works/coachtech-contact-form-.git
-    cd contact-form-app
+    cd coachtech-contact-form-
     ```
 
 2. **.envファイルの準備**
@@ -109,7 +109,7 @@ http://localhost
 3. **Composer依存パッケージのインストール**
 
     ```bash
-    ./vendor/bin/sail composer install
+    composer install
     ```
 
 4. **Laravel Sailの起動**
@@ -159,15 +159,24 @@ http://localhost
 - 管理画面（ページネーション）
 - API（CRUD）
 
-## APIエンドポイント一覧
 
-○○○○○○ ○○○○○○ ○○○○○○ ○○○○○○ ○○○○○○ ○○○○○○ ○○○○○○ ○○○○○○ ○○○○○○
+## APIエンドポイント一覧
 
 | HTTPメソッド | URI | 概要 |
 |---|---|---|
-| GET | /○○○○○○/○○○○○○/○○○○○○ | ○○○○○○ |
-| GET | /○○○○○○/○○○○○○/○○○○○○ | ○○○○○○ |
-| GET | /○○○○○○/○○○○○○/○○○○○○ | ○○○○○○ |
-| GET | /○○○○○○/○○○○○○/○○○○○○ | ○○○○○○ |
-| GET | /○○○○○○/○○○○○○/○○○○○○ | ○○○○○○ |
-※ API 機能は現在実装中のため、エンドポイント一覧は後日追加予定です。
+| GET | /api/v1/contacts | お問い合わせ一覧取得（検索・ページネーション対応） |
+| GET | /api/v1/contacts/{id} | お問い合わせ詳細取得 |
+| POST | /api/v1/contacts | お問い合わせ作成 |
+| PUT | /api/v1/contacts/{id} | お問い合わせ更新 |
+| DELETE | /api/v1/contacts/{id} | お問い合わせ削除 |
+
+### 検索パラメータ（GET /api/v1/contacts）
+
+| パラメータ | 型 | 説明 |
+|---|---|---|
+| keyword | string | 氏名・メールアドレスで部分一致検索 |
+| gender | integer | 性別（1:男性 / 2:女性 / 3:その他） |
+| category_id | integer | カテゴリID |
+| date | date | 作成日（YYYY-MM-DD） |
+| per_page | integer | 1ページあたりの件数（デフォルト:10 / 最大:100） |
+| page | integer | ページ番号 |
