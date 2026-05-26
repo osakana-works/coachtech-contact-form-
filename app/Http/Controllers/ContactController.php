@@ -60,7 +60,7 @@ class ContactController extends Controller
     {
         // dd($request);
         $contacts = Contact::with('category')
-            ->filter($request)
+            ->filter($request->validated())
             ->orderBy('created_at', 'desc')
             ->get();
 

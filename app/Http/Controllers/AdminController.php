@@ -13,7 +13,7 @@ class AdminController extends Controller
     {
         $categories = Category::all();
         $contacts = Contact::with(['category', 'tags'])
-            ->filter($request)
+            ->filter($request->validated())
             ->orderBy('created_at', 'desc')
             ->paginate(7);
 
