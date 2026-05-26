@@ -23,7 +23,7 @@ class ExportContactRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'keyword' => ['nullable', 'string', 'max:50'],
+            'keyword' => ['nullable', 'string', 'max:255'],
             'gender' => ['nullable', 'in:0,1,2,3'],
             'category_id' => ['nullable', 'exists:categories,id'],
             'date' => ['nullable', 'date'],

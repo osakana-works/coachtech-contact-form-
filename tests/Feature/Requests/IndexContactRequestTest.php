@@ -58,4 +58,43 @@ class IndexContactRequestTest extends TestCase
 
         $this->assertTrue($validator->fails());
     }
+
+    /** @test */
+    public function per_pageが範囲外ならエラーになる()
+    {
+        $data = ['per_page' => 0];
+        $validator = Validator::make($data, (new IndexContactRequest)->rules());
+        $this->assertTrue($validator->fails());
+
+        $data = ['per_page' => 101];
+        $validator = Validator::make($data, (new IndexContactRequest)->rules());
+        $this->assertTrue($validator->fails());
+    }
+
+    /** @test */
+    public function per_pageが正しい値ならバリデーションが通る()
+    {
+        $data = ['per_page' => 10];
+        $validator = Validator::make($data, (new IndexContactRequest)->rules());
+        $this->assertTrue($validator->passes());
+    }
+
+    /** @test */
+    public function genderが不正な場合APIは422を返す()
+    {
+        $response = $this->getJson('/api/v1/contacts?gender=4');
+
+        $response->assertStatus(422);
+        $response->assertJsonFragment(['gender' => ['性別の値が不正です']]);
+    }
+
+    /** @test */
+    public function 存在しないcategory_idの場合APIは422を返す()
+    {
+        $response = $this->getJson('/api/v1/contacts?category_id=999999');
+
+        $response->assertStatus(422);
+        $response->assertJsonFragment(['category_id' => ['選択されたカテゴリーが存在しません']]);
+    }
+
 }
