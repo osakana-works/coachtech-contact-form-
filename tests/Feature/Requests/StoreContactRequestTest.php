@@ -182,4 +182,104 @@ class StoreContactRequestTest extends TestCase
 
         $this->assertTrue($validator->fails());
     }
+
+        /** @test */
+    public function 必須項目が空の場合APIは422を返す()
+    {
+        $response = $this->postJson('/api/v1/contacts', []);
+
+        $response->assertStatus(422);
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'first_name',
+                'last_name',
+                'gender',
+                'email',
+                'tel',
+                'address',
+                'category_id',
+                'detail',
+            ],
+        ]);
+    }
+
+    /** @test */
+    public function 電話番号が不正な場合APIは422を返す()
+    {
+        $category = Category::factory()->create();
+
+        $response = $this->postJson('/api/v1/contacts', [
+            'first_name' => '山田',
+            'last_name' => '太郎',
+            'gender' => 1,
+            'email' => 'test@example.com',
+            'tel' => '123',// ← ここだけ不正
+            'address' => '東京都江東区',
+            'category_id' => $category->id,
+            'detail' => 'お問い合わせ内容です。',
+        ]);
+
+        $response->assertStatus(422);
+        $response->assertJsonFragment(['tel' => ['電話番号はハイフンなしの10〜11桁の数字で入力してください']]);
+    }
+
+    /** @test */
+    public function 性別が不正な場合APIは422を返す()
+    {
+        $category = Category::factory()->create();
+
+        $response = $this->postJson('/api/v1/contacts', [
+            'first_name' => '山田',
+            'last_name' => '太郎',
+            'gender' => 5,// ← ここだけ不正
+            'email' => 'test@example.com',
+            'tel' => '09012345678',
+            'address' => '東京都江東区',
+            'category_id' => $category->id,
+            'detail' => 'お問い合わせ内容です。',
+        ]);
+
+        $response->assertStatus(422);
+        $response->assertJsonFragment(['gender' => ['性別の値が不正です']]);
+    }
+
+    /** @test */
+    public function 存在しないカテゴリの場合APIは422を返す()
+    {
+        $response = $this->postJson('/api/v1/contacts', [
+            'first_name' => '山田',
+            'last_name' => '太郎',
+            'gender' => 1,
+            'email' => 'test@example.com',
+            'tel' => '09012345678',
+            'address' => '東京都江東区',
+            'category_id' => 999999,// ← ここだけ不正
+            'detail' => 'お問い合わせ内容です。',
+        ]);
+
+        $response->assertStatus(422);
+        $response->assertJsonFragment(['category_id' => ['選択されたカテゴリーが存在しません']]);
+    }
+
+    /** @test */
+    public function 存在しないタグの場合APIは422を返す()
+    {
+        $category = Category::factory()->create();
+
+        $response = $this->postJson('/api/v1/contacts', [
+            'first_name' => '山田',
+            'last_name' => '太郎',
+            'gender' => 1,
+            'email' => 'test@example.com',
+            'tel' => '09012345678',
+            'address' => '東京都江東区',
+            'category_id' => $category->id,
+            'detail' => 'お問い合わせ内容です。',
+            'tag_ids' => [999999],// ← ここだけ不正
+        ]);
+
+        $response->assertStatus(422);
+        $response->assertJsonFragment(['tag_ids.0' => ['選択されたタグが存在しません']]);
+    }
 }
