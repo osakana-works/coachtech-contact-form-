@@ -18,7 +18,7 @@ class ContactController extends Controller
      */
     public function index(IndexContactRequest $request): AnonymousResourceCollection
     {
-        $perPage = $request->input('per_page', 10);
+        $perPage = $request->input('per_page', 20);
 
         $contacts = Contact::with(['category', 'tags'])
             ->filter($request->validated())
