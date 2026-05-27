@@ -1,7 +1,8 @@
 # COACHTECH お問い合わせフォーム
 
-Laravel を使って作成したお問い合わせフォームアプリです。
-カテゴリ管理、タグ付け、バリデーションなど、基本的な CRUD 機能を学習できます。
+Laravel を使ったお問い合わせ管理システムです。
+フォーム入力・確認・送信、管理画面での検索・詳細表示・CSV 出力、
+タグ管理、公開 API など、実務で必要な CRUD 機能を幅広く実装しています。
 
 ## 作成者
 
@@ -180,5 +181,5 @@ http://localhost
 | gender | integer | 性別（1:男性 / 2:女性 / 3:その他） |
 | category_id | integer | カテゴリID |
 | date | date | 作成日（YYYY-MM-DD） |
-| per_page | integer | 1ページあたりの件数（デフォルト:10 / 最大:100） |
+| per_page | integer | 1ページあたりの件数（デフォルト:20 / 最大:100） |
 | page | integer | ページ番号 |
