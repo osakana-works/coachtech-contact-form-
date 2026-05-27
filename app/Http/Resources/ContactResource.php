@@ -28,17 +28,9 @@ class ContactResource extends JsonResource
             'building' => $this->building,
             'detail' => $this->detail,
 
-            'category' => [
-                'id' => $this->category->id,
-                'content' => $this->category->content,
-            ],
+            'category' => new CategoryResource($this->category),
 
-            'tags' => $this->tags->map(function ($tag) {
-                return [
-                    'id' => $tag->id,
-                    'name' => $tag->name,
-                ];
-            }),
+            'tags' => TagResource::collection($this->tags),
 
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
