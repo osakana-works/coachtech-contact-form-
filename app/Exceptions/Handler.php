@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -20,7 +21,7 @@ class Handler extends ExceptionHandler
             //
         });
 
-        $this->renderable(function (ModelNotFoundException $e, $request) {
+        $this->renderable(function (NotFoundHttpException $e, $request) {
             if ($request->expectsJson()) {
                 return response()->json([
                     'error' => 'お問い合わせが見つかりませんでした。',
